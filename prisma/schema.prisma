@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  name      String
+  email     String     @unique
+  password  String
+  image     String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  order     Order[]
+  cart      Cart[]
+  wishlist  Wishlist[]
+}
+
+model Product {
+  id              String      @id @default(cuid())
+  name            String
+  category        String
+  price           Float
+  discountedPrice Float
+  rating          Float
+  images          String[]
+  description     String
+  instock         Boolean     @default(true)
+  review          Review[]
+  items           OrderItem[]
+  cart            Cart[]
+  wishlist        Wishlist[]
+}
+
+model Cart {
+  id        String  @id @default(uuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Wishlist {
+  id        String  @id @default(uuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+enum OrderStatus {
+  confirmed
+  cancelled
+  delivered
+  pending
+}
+
+enum paymentMethod {
+  cod
+  online
+}
+
+model OrderItem {
+  id         String  @id @default(cuid())
+  name       String
+  price      Float
+  quantity   Int
+  productId  String
+  image      String
+  thread_one String  @default("no color")
+  thread_two String  @default("no color")
+  name_on    String?
+  product    Product @relation(fields: [productId], references: [id])
+  orderId    String
+  order      Order   @relation(fields: [orderId], references: [id])
+}
+
+model Order {
+  id                String        @id @default(uuid())
+  userId            String
+  user              User          @relation(fields: [userId], references: [id])
+  OrderItems        OrderItem[]
+  total_quantity    Int
+  total_price       Float
+  buyer_firstName   String
+  buyer_lastname    String
+  buyer_email       String
+  buyer_address     String
+  buyer_city        String
+  buyer_state       String
+  buyer_pincode     Int
+  buyer_phone       String
+  payment_method    paymentMethod
+  razorpayPaymentId String?
+  razorpayOrderId   String?
+  razorpaySignature String?
+  tracking_id       String?
+  status            OrderStatus   @default(pending)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+}
+
+model Review {
+  id        String  @id @default(cuid())
+  author    String
+  rating    Float
+  date      String
+  content   String
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Categories {
+  id    String @id @default(cuid())
+  title String
+}
