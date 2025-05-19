@@ -36,15 +36,11 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center w-fit">
-            <Image src="/logo.png" alt='logo' width={200} height={200} className='w-12 h-10' />
-            <div className='ml-2 flex justify-center items-start flex-col'>
-              <span className="text-xl font-semibold text-gray-800">Ambbera</span>
-              <p className='text-xs'>Unwrap joy, and discover happiness</p>
-            </div>
+            <Image src="/logo.png" alt='logo' width={200} height={200} className='w-32 h-12' />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-14 -ml-52">
+          <div className="hidden md:flex items-center space-x-14 -ml-20">
             <Link href="/" className="text-gray-700 hover:text-[#B8860B] transition-colors">
               Home
             </Link>

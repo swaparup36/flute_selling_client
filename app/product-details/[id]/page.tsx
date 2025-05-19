@@ -314,7 +314,7 @@ const ProductDetails = () => {
                 <div className="mb-8 space-y-6">
                     <h3 className="font-medium text-gray-900">Customize Your Flute</h3>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                             <label className="block text-sm font-medium text-gray-700">
                                 Thread Color 1
@@ -349,6 +349,66 @@ const ProductDetails = () => {
                                     </option>
                                 ))}
                             </select>
+                        </div>
+                    </div> */}
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Thread Color 1 */}
+                        <div className="space-y-2">
+                            <label className="block text-sm font-medium text-gray-700">
+                                Thread Color 1
+                            </label>
+                            <div className="flex flex-wrap gap-2">
+                                <button
+                                    type="button"
+                                    className={`w-8 h-8 rounded-full border-2 flex items-center justify-center ${threadOne === 'no color' ? 'border-[#C17777]' : 'border-gray-300'}`}
+                                    style={{ background: '#fff' }}
+                                    onClick={() => setThreadOne('no color')}
+                                    title="No color"
+                                >
+                                    <span className="text-xs text-gray-400">×</span>
+                                </button>
+                                {threadColors.map((color, idx) => (
+                                    <button
+                                        key={idx}
+                                        type="button"
+                                        className={`w-8 h-8 rounded-full border-2 transition-all duration-150 ${threadOne === color ? 'border-[#C17777] scale-110' : 'border-gray-300'}`}
+                                        style={{ background: color }}
+                                        onClick={() => setThreadOne(color)}
+                                        title={color}
+                                    />
+                                ))}
+                            </div>
+                            <span className="text-xs text-gray-500">Selected: {threadOne}</span>
+                        </div>
+
+                        {/* Thread Color 2 */}
+                        <div className="space-y-2">
+                            <label className="block text-sm font-medium text-gray-700">
+                                Thread Color 2
+                            </label>
+                            <div className="flex flex-wrap gap-2">
+                                <button
+                                    type="button"
+                                    className={`w-8 h-8 rounded-full border-2 flex items-center justify-center ${threadTwo === 'no color' ? 'border-[#C17777]' : 'border-gray-300'}`}
+                                    style={{ background: '#fff' }}
+                                    onClick={() => setThreadTwo('no color')}
+                                    title="No color"
+                                >
+                                    <span className="text-xs text-gray-400">×</span>
+                                </button>
+                                {threadColors.map((color, idx) => (
+                                    <button
+                                        key={idx}
+                                        type="button"
+                                        className={`w-8 h-8 rounded-full border-2 transition-all duration-150 ${threadTwo === color ? 'border-[#C17777] scale-110' : 'border-gray-300'}`}
+                                        style={{ background: color }}
+                                        onClick={() => setThreadTwo(color)}
+                                        title={color}
+                                    />
+                                ))}
+                            </div>
+                            <span className="text-xs text-gray-500">Selected: {threadTwo}</span>
                         </div>
                     </div>
 
@@ -428,21 +488,6 @@ const ProductDetails = () => {
                             </span>
                         </button>
                     </div>
-                </div>
-
-                {/* Product Meta */}
-                <div className="space-y-2 text-sm text-gray-600">
-                    <p>SKU: <span className="text-gray-900">N/A-350</span></p>
-                    <p>
-                    Categories: {' '}
-                    <a href="#" className="text-gray-900 hover:text-[#C17777]">Office & Stationery</a>,{' '}
-                    <a href="#" className="text-gray-900 hover:text-[#C17777]">Personalised Gifts</a>
-                    </p>
-                    <p>
-                    Tags: {' '}
-                    <a href="#" className="text-gray-900 hover:text-[#C17777]">Classic</a>,{' '}
-                    <a href="#" className="text-gray-900 hover:text-[#C17777]">Shoes</a>
-                    </p>
                 </div>
                 </div>
             </div>

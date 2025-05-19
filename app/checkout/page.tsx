@@ -164,10 +164,10 @@ function Checkout() {
     }
 
     const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: amount.toString(),
         currency: currency,
-        name: "Soumya Corp.",
+        name: "Bakale's Flute",
         description: "Test Transaction",
         image: { logo },
         order_id: order_id,

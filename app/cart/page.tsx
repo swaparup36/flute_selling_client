@@ -242,7 +242,7 @@ function Cart() {
                                         >
                                             <option value="no color">No color</option>
                                             {threadColors.map((color, index) => (
-                                                <option key={index} value={color}>{color}</option>
+                                                <option className="flex w-full justify-between items-center" key={index} value={color}>{color}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -258,7 +258,7 @@ function Cart() {
                                         >
                                             <option value="no color">No color</option>
                                             {threadColors.map((color, index) => (
-                                                <option key={index} value={color}>{color}</option>
+                                                <option className="flex w-full justify-between items-center" key={index} value={color}>{color}</option>
                                             ))}
                                         </select>
                                     </div>

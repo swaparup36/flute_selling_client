@@ -19,6 +19,12 @@ export async function POST(req: NextRequest){
             });
         }
 
+        await prisma.productImage.deleteMany({
+            where: {
+                productId: existingProduct.id
+            }
+        });
+
         const updatedProduct = await prisma.product.update({
             data: {
                 name: body.name,
@@ -26,12 +32,23 @@ export async function POST(req: NextRequest){
                 description: body.description,
                 price: body.price,
                 discountedPrice: body.discountedPrice,
-                images: body.images,
             },
             where: {
                 id: body.id
             }
-        })
+        });
+
+        for (const image of body.images) {
+            const newImage = await prisma.productImage.create({
+                data: {
+                    url: image,
+                    productId: updatedProduct.id
+                }
+            });
+        }
+
+        // @ts-ignore
+        updatedProduct.images = body.images;
 
         return NextResponse.json({
             success: true,

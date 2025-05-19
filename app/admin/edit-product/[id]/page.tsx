@@ -87,7 +87,7 @@ const AdminProductEdit = () => {
 
       if(!imgUploadResObj.success) {
         setIsSubmitting(false);
-        return toast.warn(`can not add product: ${imgUploadResObj.message}`);
+        return toast.warn(`can not edit product: ${imgUploadResObj.message}`);
       }
 
       const imagesToUpdate = [...existingUrls, ...imgUploadResObj.imageURLs];

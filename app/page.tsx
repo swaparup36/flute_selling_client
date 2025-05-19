@@ -253,26 +253,49 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                title: "Hindustani Classical Flute",
-                description:
-                  "Traditional flutes crafted for Indian classical music",
-                image: "/images/categories/hindustani-flute.jpg",
+                title: "Hindustani Classical Middle Flute",
+                description: "Traditional middle-range flutes for Indian classical music",
+                image: "/images/categories/hindustani-middle-flute.jpg",
                 bgColor: "bg-[#FFF5E6]",
               },
               {
-                title: "Classical Flute",
-                description: "Premium flutes for classical performances",
-                image: "/images/categories/classical-flute.jpg",
+                title: "Hindustani Classical Bass Flute",
+                description: "Deep, resonant bass flutes for Hindustani performances",
+                image: "/images/categories/hindustani-bass-flute.jpg",
                 bgColor: "bg-[#E6E8FF]",
               },
               {
-                title: "Flute Combo's",
-                description: "Curated sets for enhanced musical experience",
+                title: "Assam Bamboo Bass Flute",
+                description: "Authentic Assam bamboo bass flutes with rich tones",
+                image: "/images/categories/assam-bass-flute.jpg",
+                bgColor: "bg-[#FFE6E6]",
+              },
+              {
+                title: "Assam Bamboo Carnatic Flute",
+                description: "Carnatic flutes crafted from Assam bamboo",
+                image: "/images/categories/assam-carnatic-flute.jpg",
+                bgColor: "bg-[#E6FFE6]",
+              },
+              {
+                title: "Kerala Bamboo Bass Flute",
+                description: "Kerala bamboo bass flutes for soulful melodies",
+                image: "/images/categories/kerala-bass-flute.jpg",
+                bgColor: "bg-[#FFF5E6]",
+              },
+              {
+                title: "Kerala Bamboo Carnatic Flute",
+                description: "Carnatic flutes made from Kerala bamboo",
+                image: "/images/categories/kerala-carnatic-flute.jpg",
+                bgColor: "bg-[#E6E8FF]",
+              },
+              {
+                title: "Flute Combo",
+                description: "Curated flute sets for enhanced musical experience",
                 image: "/images/categories/flute-combo.jpg",
                 bgColor: "bg-[#FFE6E6]",
               },
               {
-                title: "Flute Accessories",
+                title: "Accessories",
                 description: "Essential accessories to complement your flute",
                 image: "/images/categories/flute-accessories.jpg",
                 bgColor: "bg-[#E6FFE6]",

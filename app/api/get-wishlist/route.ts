@@ -54,6 +54,17 @@ export async function GET(req: NextRequest){
             }
         }
 
+        for (const product of products) {
+            const images = await prisma.productImage.findMany({
+                where: {
+                    productId: product.id
+                }
+            });
+
+            // @ts-ignore
+            product.images = images.map((image) => image.url);
+        }
+
         return NextResponse.json({
             success: true,
             products: products

@@ -25,6 +25,15 @@ export async function POST(req: NextRequest){
             });
         }
 
+        const images = await prisma.productImage.findMany({
+            where: {
+                productId: requiredProduct.id
+            }
+        });
+
+        // @ts-ignore
+        requiredProduct.images = images.map((image) => image.url);
+
         return NextResponse.json({
             success: true,
             requiredProduct: requiredProduct,

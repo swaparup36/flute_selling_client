@@ -47,6 +47,7 @@ const AdminAllProductsPage = () => {
         return toast.warn(`can fetch all products: ${getAllProductsResponse.data.message}`);
       }
 
+      console.log("all products", getAllProductsResponse.data.allProducts);
       setAllProducts(getAllProductsResponse.data.allProducts);
       setIsLoading(false);
     } catch (error) {

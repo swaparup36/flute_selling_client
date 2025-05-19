@@ -310,7 +310,7 @@ const AdminProductUpload = () => {
                     <input
                         type="file"
                         ref={fileInputRef}
-                        accept="image/*"
+                        accept="image/png, image/jpeg, image/jpg"
                         onChange={handleImageChange}
                         className="hidden"
                         multiple={true}
