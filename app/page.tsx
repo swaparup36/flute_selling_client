@@ -442,9 +442,10 @@ export default function Home() {
                       <Image
                         src={review.image}
                         alt={review.name}
-                        fill={true} // Use fill instead of width/height
-                        className="rounded-full object-cover" // Add object-cover
-                        style={{ objectFit: "cover" }} // Ensure consistent sizing
+                        width={200}
+                        height={200}
+                        className="rounded-full object-cover"
+                        style={{ objectFit: "cover" }}
                       />
                     </div>
                     <div className="ml-4">

@@ -20,6 +20,7 @@ const AdminAllProductsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("All Categories");
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [allProducts, setAllProducts] = useState<productType[] | null>(null);
+  const [totalProducts, setTotalProducts] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [allCategories, setAllCategories] = useState<productCategoryType[] | null>(null);
   const [page, setPage] = useState<number>(1);
@@ -41,19 +42,35 @@ const AdminAllProductsPage = () => {
     }
   }
 
-  const getAllProducts = async() => {
-    setIsLoading(true);
+  const getAllProducts = async(isLoadMore: boolean = false) => {
+    if (!isLoadMore) {
+      setIsLoading(true);
+    } else {
+      setIsLoadingMore(true);
+    }
     try {
-      const getAllProductsResponse = await axios.get("/api/get-all-products");
+      const getAllProductsResponse = await axios.get(`/api/get-all-products?category=all&page=${page}&limit=9`);
 
       if(!getAllProductsResponse.data.success){
         setIsLoading(false);
+        setIsLoadingMore(false);
         return toast.warn(`can fetch all products: ${getAllProductsResponse.data.message}`);
       }
 
+      setTotalProducts(getAllProductsResponse.data.totalProducts);
       console.log("all products", getAllProductsResponse.data.allProducts);
-      setAllProducts(getAllProductsResponse.data.allProducts);
+      const newProducts = getAllProductsResponse.data.allProducts;
+
+      setHasMore(newProducts.length === 9); // If we got less than 9 products, we've reached the end
+
+      if (isLoadMore) {
+          setAllProducts(prev => prev ? [...prev, ...newProducts] : newProducts);
+      } else {
+          setAllProducts(newProducts);
+      }
+
       setIsLoading(false);
+      setIsLoadingMore(false);
     } catch (error) {
       toast.warn(`can fetch all products: ${error}`);
       setIsLoading(false);
@@ -106,6 +123,12 @@ const AdminAllProductsPage = () => {
 
     return () => observer.disconnect();
   }, [hasMore, isLoadingMore]);
+
+  useEffect(() => {
+    if (page > 1) {
+        getAllProducts(true);
+    }
+  }, [page]);
 
   useEffect(()=>{
     const isAuthenticated = localStorage.getItem('adminToken');
@@ -211,7 +234,7 @@ const AdminAllProductsPage = () => {
           {/* Products Grid */}
           <div className="md:col-span-3">
             <div className="flex justify-between items-start md:items-center mb-8 md:flex-row flex-col-reverse">
-              <p className="text-gray-600">Showing 1–4 of {allProducts?.length} results</p>
+              <p className="text-gray-600">Showing 1–{allProducts?.length} of {totalProducts} results</p>
               <div className="flex items-center justify-between w-full md:w-fit space-x-4 mb-4">
                 <select className="border rounded-md px-4 py-2" value={sortingOrder} onChange={(e) => setSortingOrder(e.target.value)}>
                   <option>Default sorting</option>

@@ -11,12 +11,14 @@ export async function GET(req: Request){
     const skip = (page - 1) * limit;
     try {
         let allProducts;
+        let totalProducts;
         console.log("category: ", category);
         if(category === 'all' || category === '' || category === null){
             allProducts = await prisma.product.findMany({
                 skip,
                 take: limit
             });
+            totalProducts = await prisma.product.count();
         } else {
             allProducts = await prisma.product.findMany({
                 where: {
@@ -24,6 +26,11 @@ export async function GET(req: Request){
                 },
                 skip,
                 take: limit
+            });
+            totalProducts = await prisma.product.count({
+                where: {
+                    category: category
+                }
             });
         }
 
@@ -39,7 +46,8 @@ export async function GET(req: Request){
 
         return NextResponse.json({
             success: true,
-            allProducts: allProducts || []
+            allProducts: allProducts || [],
+            totalProducts: totalProducts || 0,
         });
     } catch (error) {
         console.log(error);

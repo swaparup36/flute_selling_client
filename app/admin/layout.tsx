@@ -11,8 +11,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'Admin | Satyam - Handcrafted Gifts with Indian Heritage',
-  description: 'Discover unique handcrafted gifts that blend modern aesthetics with Indian cultural heritage at Satyam.',
+  title: "Bakale's Flute – Premium Handcrafted Bamboo Flutes | Perfect for Beginners & Professionals",
+  description: "Shop authentic, handcrafted bamboo flutes at Bakale's Flute – crafted for musicians of all levels. Our premium bansuris deliver rich, resonant sound with superior craftsmanship, ideal for classical music, meditation, and folk traditions. Enjoy fast shipping, expert guidance, and affordable prices. Elevate your music journey with Bakale's Flute today!",
 };
 
 export default function AdminLayout({
@@ -21,12 +21,9 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={poppins.className}>
-        <AdminNavbar />
-        {children}
-        {/* <Footer /> */}
-      </body>
-    </html>
+    <>
+      <AdminNavbar />
+      {children}
+    </>
   );
 }

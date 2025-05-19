@@ -13,7 +13,7 @@ function FeatureProducts() {
   const getFeaturedProducts = async() => {
       setIsLoading(true);
       try {
-        const getAllProductsResponse = await axios.get("/api/get-all-products");
+        const getAllProductsResponse = await axios.get("/api/get-all-products?category=all&page=1&limit=4");
   
         if(!getAllProductsResponse.data.success){
           setIsLoading(false);

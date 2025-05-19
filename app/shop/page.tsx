@@ -27,6 +27,7 @@ const ProductsPage = () => {
   const [filterCategory, setFilterCategory] = useState<string>(category? category : "all");
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [allProducts, setAllProducts] = useState<productType[] | null>(null);
+  const [totalProducts, setTotalProducts] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [allCategories, setAllCategories] = useState<productCategoryType[] | null>(null);
   const [wishlistIds, setWishlistIds] = useState<string[]>([]);
@@ -114,18 +115,19 @@ const ProductsPage = () => {
         const getAllProductsResponse = await axios.get(`/api/get-all-products?category=${filterCategory}&page=${page}&limit=9`);
 
         if(!getAllProductsResponse.data.success){
-            setIsLoading(false);
-            setIsLoadingMore(false);
-            return toast.warn(`can not fetch products: ${getAllProductsResponse.data.message}`);
+          setIsLoading(false);
+          setIsLoadingMore(false);
+          return toast.warn(`can not fetch products: ${getAllProductsResponse.data.message}`);
         }
 
+        setTotalProducts(getAllProductsResponse.data.totalProducts);
         const newProducts = getAllProductsResponse.data.allProducts;
         setHasMore(newProducts.length === 9); // If we got less than 9 products, we've reached the end
 
         if (isLoadMore) {
-            setAllProducts(prev => prev ? [...prev, ...newProducts] : newProducts);
+          setAllProducts(prev => prev ? [...prev, ...newProducts] : newProducts);
         } else {
-            setAllProducts(newProducts);
+          setAllProducts(newProducts);
         }
 
         setIsLoading(false);
@@ -141,7 +143,8 @@ const ProductsPage = () => {
     const observer = new IntersectionObserver(
         entries => {
             if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
-                setPage(prev => prev + 1);
+              console.log('Bottom reached, loading more...');
+              setPage(prev => prev + 1);
             }
         },
         { threshold: 1.0 }
@@ -290,7 +293,7 @@ const ProductsPage = () => {
           {/* Products Grid */}
           <div className="md:col-span-3">
             <div className="flex justify-between items-start md:items-center mb-8 md:flex-row flex-col-reverse">
-              <p className="text-gray-600">Showing 1–4 of {allProducts?.length} results</p>
+              <p className="text-gray-600">Showing 1–{allProducts?.length} of {totalProducts} results</p>
               <div className="flex items-center justify-between w-full md:w-fit space-x-4 mb-4">
                 <select className="border rounded-md px-4 py-2" value={sortingOrder} onChange={(e) => setSortingOrder(e.target.value)}>
                   <option>Default sorting</option>
@@ -353,7 +356,7 @@ const ProductsPage = () => {
                             }`}
                           />
                         </button>
-                        <div className="mt-4">
+                        <div className="mt-2">
                           <Link href={`/product-details/${product.id}`} className="block">
                             <h3 className="text-lg font-medium text-gray-900 hover:text-[#C17777]">
                               {product.name}
@@ -418,7 +421,7 @@ const ProductsPage = () => {
               )
             }
 
-            <div ref={observerTarget} className="w-full h-10 flex items-center justify-center">
+            <div ref={observerTarget} className="w-full h-10 flex items-center justify-center my-2">
                 {isLoadingMore && (
                     <div className="text-gray-500">Loading more products...</div>
                 )}
