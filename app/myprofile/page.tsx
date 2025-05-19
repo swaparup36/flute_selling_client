@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { User, Package, Heart, Settings, Edit2, Star, ChevronRight, Trash2, LogOut } from 'lucide-react';
 import Image from 'next/image';
 import axios from 'axios';
@@ -385,4 +385,10 @@ function MyProfile() {
   );
 }
 
-export default MyProfile;
+export default function MyProfilePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MyProfile />
+    </Suspense>
+  );
+}

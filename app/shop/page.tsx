@@ -2,7 +2,7 @@
 
 
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { Filter, Heart, ShoppingCart, Star, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -430,4 +430,10 @@ const ProductsPage = () => {
   );
 };
 
-export default ProductsPage;
+export default function ShopProductsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductsPage />
+    </Suspense>
+  );
+}
