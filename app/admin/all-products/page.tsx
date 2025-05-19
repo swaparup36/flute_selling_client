@@ -2,7 +2,7 @@
 
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Filter, Star, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,7 +21,11 @@ const AdminAllProductsPage = () => {
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [allProducts, setAllProducts] = useState<productType[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [allCategories, setAllCategories] = useState<productCategoryType[] | null>(null)
+  const [allCategories, setAllCategories] = useState<productCategoryType[] | null>(null);
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
+  const observerTarget = useRef<HTMLDivElement | null>(null);
 
   const getAllCategories = async () => {
     try {
@@ -85,6 +89,23 @@ const AdminAllProductsPage = () => {
       toast.warn(`can not mark product out of stock: ${error}`);
     }
   }
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+        entries => {
+            if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
+                setPage(prev => prev + 1);
+            }
+        },
+        { threshold: 1.0 }
+    );
+
+    if (observerTarget.current) {
+        observer.observe(observerTarget.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasMore, isLoadingMore]);
 
   useEffect(()=>{
     const isAuthenticated = localStorage.getItem('adminToken');
@@ -298,6 +319,12 @@ const AdminAllProductsPage = () => {
                 )
               )
             }
+
+            <div ref={observerTarget} className="w-full h-10 flex items-center justify-center">
+                {isLoadingMore && (
+                    <div className="text-gray-500">Loading more products...</div>
+                )}
+            </div>
           </div>
         </div>
       </div>

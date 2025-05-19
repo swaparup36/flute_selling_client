@@ -43,6 +43,17 @@ const AdminProductUpload = () => {
         return toast.warn("product image is not provided");
       }
 
+      let totalFileSize = 0;
+      for (const file of files) {
+        const fileSize = file.size / (1024 * 1024);
+        totalFileSize += fileSize;
+      }
+
+      if (totalFileSize > 15) {
+        setIsSubmitting(false);
+        return toast.warn("total file size should be less than 15MB");
+      }
+
       const formData = new FormData();
       let i = 0;
       for (const file of files) {

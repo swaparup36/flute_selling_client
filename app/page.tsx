@@ -253,7 +253,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                title: "Hindustani Classical Middle Flute",
+                title: "Hindustani Classical Medium Flute",
                 description: "Traditional middle-range flutes for Indian classical music",
                 image: "/images/categories/hindustani-middle-flute.jpg",
                 bgColor: "bg-[#FFF5E6]",

@@ -35,7 +35,7 @@ model Product {
   discountedPrice Float
   rating          Float
   images          ProductImage[]
-  description     String
+  description     String       @db.Text
   instock         Boolean     @default(true)
   review          Review[]
   items           OrderItem[]

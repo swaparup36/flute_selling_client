@@ -25,7 +25,7 @@ export default function AdminLayout({
       <body className={poppins.className}>
         <AdminNavbar />
         {children}
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
