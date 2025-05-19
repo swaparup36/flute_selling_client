@@ -40,16 +40,23 @@ const SignUp = () => {
     }));
   }
 
-
   const handleSendOtp = async () => {
     setError('');
     setFormValidationErrors(null);
     setIsLoading(true);
 
     const emailValidation = signupSchema.shape.email.safeParse(formData.email);
+    const passwordValidation = signupSchema.shape.password.safeParse(formData.password);
     if (!emailValidation.success) {
       setFormValidationErrors({
         email: emailValidation.error.errors[0].message
+      });
+      setIsLoading(false);
+      return;
+    }
+    if (!passwordValidation.success) {
+      setFormValidationErrors({
+        password: passwordValidation.error.errors[0].message
       });
       setIsLoading(false);
       return;

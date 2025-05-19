@@ -149,7 +149,7 @@ const Login = () => {
                                 {formValidationErrors.password}
                             </p>
                         }
-                        <p className='text-sm underline mt-2 cursor-pointer'>forgot password?</p>
+                        <p className='text-sm underline mt-2 cursor-pointer' onClick={() => router.push('/auth/forgot-password')}>forgot password?</p>
                     </div>
 
                     <div>

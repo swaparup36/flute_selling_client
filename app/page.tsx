@@ -108,12 +108,12 @@ export default function Home() {
                 className="grid grid-cols-3 gap-8 pt-8"
               >
                 {[
-                  { count: "100+", text: "Flute Varieties" },
-                  { count: "5000+", text: "Happy Musicians" },
-                  { count: "25+", text: "Years Experience" },
-                ].map((stat, index) => (
+                  { id: 1, count: "100+", text: "Flute Varieties" },
+                  { id: 2, count: "5000+", text: "Happy Musicians" },
+                  { id: 3, count: "25+", text: "Years Experience" },
+                ].map((stat) => (
                   <motion.div
-                    key={index}
+                    key={stat.id}
                     variants={fadeIn}
                     whileHover={{ scale: 1.05 }}
                   >
@@ -403,6 +403,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
+                id: 1,
                 name: "Priya Sharma",
                 rating: 5,
                 comment:
@@ -411,6 +412,7 @@ export default function Home() {
                 date: "2 weeks ago",
               },
               {
+                id: 2,
                 name: "Rahul Mehra",
                 rating: 5,
                 comment:
@@ -419,6 +421,7 @@ export default function Home() {
                 date: "1 month ago",
               },
               {
+                id: 3,
                 name: "Anita Patel",
                 rating: 5,
                 comment:
@@ -426,9 +429,9 @@ export default function Home() {
                 image: "/images/reviews/review3.jpg",
                 date: "3 weeks ago",
               },
-            ].map((review, index) => (
+            ].map((review) => (
               <motion.div
-                key={index}
+                key={review.id}
                 variants={slideIn}
                 whileHover={{ y: -5 }}
                 className="bg-white rounded-xl p-6 shadow-md relative"
