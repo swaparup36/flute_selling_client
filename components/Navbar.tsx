@@ -47,7 +47,7 @@ export default function Navbar() {
             <Link href="/shop" className="text-gray-700 hover:text-[#B8860B] transition-colors">
               Shop
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-[#B8860B] transition-colors">
+            <Link href="/about-us" className="text-gray-700 hover:text-[#B8860B] transition-colors">
               About Us
             </Link>
             <Link href="/contact" className="text-gray-700 hover:text-[#B8860B] transition-colors">
@@ -106,7 +106,7 @@ export default function Navbar() {
               <Link href="/shop" className="block px-3 py-2 text-gray-700 hover:text-[#B8860B] transition-colors">
                 Shop
               </Link>
-              <Link href="/about" className="block px-3 py-2 text-gray-700 hover:text-[#B8860B] transition-colors">
+              <Link href="/about-us" className="block px-3 py-2 text-gray-700 hover:text-[#B8860B] transition-colors">
                 About Us
               </Link>
               <Link href="/contact" className="block px-3 py-2 text-gray-700 hover:text-[#B8860B] transition-colors">

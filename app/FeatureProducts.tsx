@@ -46,7 +46,7 @@ function FeatureProducts() {
             </div>
           </div>
 
-          <div className='flex w-full justify-start items-center'>
+          <div className='flex w-full justify-start items-center md:flex-row flex-col'>
             {
               isLoading ? (
                 <div className='flex w-full justify-center items-center'>

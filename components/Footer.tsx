@@ -43,11 +43,9 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">SERVICES</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-600 hover:text-gray-900">Size Charts</a></li>
               <li><a href="#" className="text-gray-600 hover:text-gray-900">Contact Us</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-gray-900">How To Order</a></li>
+              <li><a href="#" className="text-gray-600 hover:text-gray-900">About Us</a></li>
               <li><a href="#" className="text-gray-600 hover:text-gray-900">FAQ</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-gray-900">Size Charts</a></li>
             </ul>
           </div>
 
@@ -55,9 +53,9 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">CONTACT US</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-600 hover:text-gray-900">Email: satyam@gmail.com</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-gray-900">Phone: +91 6290779098</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-gray-900">Address: 114 N S Avenue, Serampore, Hooghly - 712201</a></li>
+              <li><p className="text-gray-600 hover:text-gray-900">Email: demo@email.com</p></li>
+              <li><p className="text-gray-600 hover:text-gray-900">Phone: +91 8892217365</p></li>
+              <li><p className="text-gray-600 hover:text-gray-900">Address: S.S.K. Colony Mulgund Road. GADAG-582 103, Raod, Mulgund, Gadag-Betageri, Karnataka - 582103</p></li>
             </ul>
           </div>
 

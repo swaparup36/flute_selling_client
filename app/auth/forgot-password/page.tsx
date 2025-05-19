@@ -76,7 +76,7 @@ const ForgotPassword = () => {
         setIsLoading(true);
 
         const validationResult = forgotPassSchema.safeParse(formData);
-            if(!validationResult.success) {
+        if(!validationResult.success) {
             const fieldErrors = validationResult.error.flatten().fieldErrors;
             setFormValidationErrors(
                 Object.fromEntries(
@@ -210,7 +210,7 @@ const ForgotPassword = () => {
                                         />
                                     </div>
                                     {(formValidationErrors && formValidationErrors.password) &&
-                                        <p>
+                                        <p className="text-red-500 my-1">
                                             {formValidationErrors.password}
                                         </p>
                                     }
