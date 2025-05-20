@@ -163,7 +163,11 @@ const AdminAllProductsPage = () => {
                   allCategories ? (
                     allCategories.map((category) => (
                       <li key={category.id}>
-                        <span className="text-gray-600 hover:text-[#C17777] cursor-pointer" onClick={() => setSelectedCategory(category.title)}>
+                        <span className="text-gray-600 hover:text-[#C17777] cursor-pointer" onClick={() => {
+                          router.push(`/admin/all-products?category=${category.title}`);
+                          setPage(1);
+                          setSelectedCategory(category.title);
+                        }}>
                           {category.title}
                         </span>
                       </li>

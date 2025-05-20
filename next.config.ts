@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         hostname: 'satyam-gift-store.s3.ap-south-1.amazonaws.com',
+      },
+      {
+        hostname: "res.cloudinary.com"
       }
     ]
   },

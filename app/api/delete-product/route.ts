@@ -19,6 +19,13 @@ export async function POST(req: NextRequest){
             });
         }
 
+        await prisma.review.deleteMany({ where: { productId: body.id } });
+        await prisma.orderItem.deleteMany({ where: { productId: body.id } });
+        await prisma.cart.deleteMany({ where: { productId: body.id } });
+        await prisma.wishlist.deleteMany({ where: { productId: body.id } });
+        await prisma.productImage.deleteMany({ where: { productId: body.id } });
+
+        console.log("Product Id: ", body.id);
         await prisma.product.delete({
             where: {
                 id: body.id
