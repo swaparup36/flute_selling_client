@@ -25,7 +25,8 @@ export async function POST(req: NextRequest){
             });
         }
 
-        const isPassMatched = bcrypt.compare(body.password, existingUser.password);
+        const isPassMatched = await bcrypt.compare(body.password, existingUser.password);
+        console.log("Is password matched: ", isPassMatched);
 
         if (!isPassMatched) {
             return NextResponse.json({

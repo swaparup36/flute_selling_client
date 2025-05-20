@@ -64,7 +64,8 @@ const SignUp = () => {
 
     try {
       const response = await axios.post('/api/auth/sendotp', {
-        email: formData.email
+        email: formData.email,
+        type: 'signup'
       });
 
       if (!response.data.success) {

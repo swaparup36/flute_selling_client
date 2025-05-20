@@ -53,7 +53,8 @@ const ForgotPassword = () => {
     
         try {
           const response = await axios.post('/api/auth/sendotp', {
-            email: formData.email
+            email: formData.email,
+            type: 'forgot-password'
           });
     
           if (!response.data.success) {
@@ -240,7 +241,7 @@ const ForgotPassword = () => {
                         )
                     }
                     <div className='flex justify-center items-center mt-3'>
-                        <Link href={'/auth/signup'} className='text-sm underline cursor-pointer w-full text-center'>Create Account</Link>
+                        <Link href={'/auth/login'} className='text-sm underline cursor-pointer w-full text-center'>Login</Link>
                     </div>
                     </div>
                 </form>
