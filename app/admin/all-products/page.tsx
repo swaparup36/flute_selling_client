@@ -2,7 +2,7 @@
 
 
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { Filter, Star, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -376,4 +376,10 @@ const AdminAllProductsPage = () => {
   );
 };
 
-export default AdminAllProductsPage;
+export default function AdminProductsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AdminAllProductsPage />
+    </Suspense>
+  );
+}
