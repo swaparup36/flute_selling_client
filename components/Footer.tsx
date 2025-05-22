@@ -14,9 +14,8 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">OUR STORE</h3>
             <p className="text-gray-600 mb-4">
-              We promise {"we'll"} get back to you promptly— your gifting needs are always on our minds!
+              Premium handcrafted bamboo flutes & accessories for all musicians. Explore Hindustani, Classical, Combos, and more—crafted with expertise and care.
             </p>
-            <p className="text-gray-600">Monday – Friday 8am – 6pm pts.</p>
           </div>
 
           {/* Information */}

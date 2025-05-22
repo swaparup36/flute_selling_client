@@ -137,7 +137,7 @@ export default function Home() {
                 <Image
                   src="/images/hero.jpg"
                   alt="Handcrafted Indian Gifts"
-                  className="object-cover w-full h-full transform scale-90"
+                  className="object-cover w-full h-full rounded-full transform scale-90"
                   width={800}
                   height={800}
                 />
@@ -356,6 +356,7 @@ export default function Home() {
                   className="px-8 py-3 bg-[#B8860B] text-white rounded-full hover:bg-[#8B6914] transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => router.push("/shop")}
                 >
                   All Collections
                 </motion.button>
@@ -364,6 +365,7 @@ export default function Home() {
                   className="px-8 py-3 bg-black/30 backdrop-blur-sm text-white rounded-full hover:bg-black/40 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => router.push("/#featured")}
                 >
                   Featured Flutes
                 </motion.button>
@@ -372,8 +374,9 @@ export default function Home() {
                   className="px-8 py-3 bg-black/30 backdrop-blur-sm text-white rounded-full hover:bg-black/40 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => router.push("/shop?category=Accessories")}
                 >
-                  Special Editions
+                  Accessories
                 </motion.button>
               </div>
             </motion.div>

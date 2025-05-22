@@ -81,7 +81,7 @@ export default function Contact() {
           <div className="flex flex-col md:flex-row items-center gap-14 md:gap-20">
             <div className="flex-1 flex justify-center">
               <Image
-                src="/images/classical-flute-banner.webp"
+                src="/images/classical-flute-banner.jpg"
                 alt="Contact Bakale's Flute"
                 width={400}
                 height={400}

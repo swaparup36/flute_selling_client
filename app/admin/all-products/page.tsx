@@ -7,7 +7,7 @@ import { Filter, Star, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { productCategoryType, productType } from '@/lib/types';
@@ -15,16 +15,20 @@ import { productCategoryType, productType } from '@/lib/types';
 
 const AdminAllProductsPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const category = searchParams.get('category');
+
   const [priceRange, setPriceRange] = useState([300, 5000]);
   const [sortingOrder, setSortingOrder] = useState<string>("Default sorting");
-  const [selectedCategory, setSelectedCategory] = useState<string>("All Categories");
+  const [selectedCategory, setSelectedCategory] = useState<string>(category? category : "all");
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [allProducts, setAllProducts] = useState<productType[] | null>(null);
   const [totalProducts, setTotalProducts] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [allCategories, setAllCategories] = useState<productCategoryType[] | null>(null);
   const [page, setPage] = useState<number>(1);
-  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [maxPage, setMaxPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(false);
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
   const observerTarget = useRef<HTMLDivElement | null>(null);
 
@@ -44,12 +48,14 @@ const AdminAllProductsPage = () => {
 
   const getAllProducts = async(isLoadMore: boolean = false) => {
     if (!isLoadMore) {
-      setIsLoading(true);
+        setIsLoading(true);
+        setIsLoadingMore(false);
     } else {
-      setIsLoadingMore(true);
+        setIsLoadingMore(true);
+        setIsLoading(false);
     }
     try {
-      const getAllProductsResponse = await axios.get(`/api/get-all-products?category=all&page=${page}&limit=9`);
+      const getAllProductsResponse = await axios.get(`/api/get-all-products?category=${selectedCategory}&page=${page}&limit=9`);
 
       if(!getAllProductsResponse.data.success){
         setIsLoading(false);
@@ -58,6 +64,8 @@ const AdminAllProductsPage = () => {
       }
 
       setTotalProducts(getAllProductsResponse.data.totalProducts);
+      setMaxPage(Math.ceil(getAllProductsResponse.data.totalProducts / 9));
+        console.log("products: ", getAllProductsResponse.data.allProducts);
       console.log("all products", getAllProductsResponse.data.allProducts);
       const newProducts = getAllProductsResponse.data.allProducts;
 
@@ -110,8 +118,11 @@ const AdminAllProductsPage = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
         entries => {
-            if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
+            if (entries[0].isIntersecting && hasMore && !isLoadingMore && allProducts && allProducts?.length >= 9) {
+              console.log('Bottom reached, loading more...');
+              if (page+1 <= maxPage) {
                 setPage(prev => prev + 1);
+              }
             }
         },
         { threshold: 1.0 }
@@ -122,12 +133,18 @@ const AdminAllProductsPage = () => {
     }
 
     return () => observer.disconnect();
-  }, [hasMore, isLoadingMore]);
+  });
 
   useEffect(() => {
-    if (page > 1) {
-        getAllProducts(true);
-    }
+    getAllCategories();
+    setAllProducts([]);
+    setPage(1);
+    getAllProducts();
+    setHasMore(true);
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    getAllProducts(page > 1);
   }, [page]);
 
   useEffect(()=>{
@@ -135,8 +152,6 @@ const AdminAllProductsPage = () => {
     if (!isAuthenticated) {
       router.push('/admin/login');
     }
-    getAllCategories();
-    getAllProducts();
   }, []);
 
   return (
@@ -159,6 +174,15 @@ const AdminAllProductsPage = () => {
             <div className="mb-8">
               <h2 className="text-xl font-bold mb-4">Product categories</h2>
               <ul className="space-y-3">
+                <li>
+                  <span className="text-gray-600 hover:text-[#C17777] cursor-pointer" onClick={() => {
+                    router.push(`/admin/all-products`);
+                    setPage(1);
+                    setSelectedCategory('all');
+                  }}>
+                    All Categories
+                  </span>
+                </li>
                 {
                   allCategories ? (
                     allCategories.map((category) => (
@@ -238,7 +262,7 @@ const AdminAllProductsPage = () => {
           {/* Products Grid */}
           <div className="md:col-span-3">
             <div className="flex justify-between items-start md:items-center mb-8 md:flex-row flex-col-reverse">
-              <p className="text-gray-600">Showing 1–{allProducts?.length} of {totalProducts} results</p>
+              <p className="text-gray-600">Showing {allProducts?.length} of {totalProducts} results</p>
               <div className="flex items-center justify-between w-full md:w-fit space-x-4 mb-4">
                 <select className="border rounded-md px-4 py-2" value={sortingOrder} onChange={(e) => setSortingOrder(e.target.value)}>
                   <option>Default sorting</option>
@@ -268,13 +292,6 @@ const AdminAllProductsPage = () => {
                       case "Sort by popularity": return b.reviews.length - a.reviews.length
                       default: return 0
                     }
-                  })
-                  .filter((product) => {
-                    if(selectedCategory !== "All Categories") {
-                      return product.category === selectedCategory;
-                    }
-
-                    return product;
                   })
                   .map((product) => (
                     <div key={product.id} className="group">
@@ -347,8 +364,8 @@ const AdminAllProductsPage = () => {
               )
             }
 
-            <div ref={observerTarget} className="w-full h-10 flex items-center justify-center">
-                {isLoadingMore && (
+            <div ref={observerTarget} className="w-full h-10 flex items-center justify-center my-2">
+                {isLoadingMore && !isLoading && (
                     <div className="text-gray-500">Loading more products...</div>
                 )}
             </div>

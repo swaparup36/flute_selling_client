@@ -32,7 +32,8 @@ const ProductsPage = () => {
   const [allCategories, setAllCategories] = useState<productCategoryType[] | null>(null);
   const [wishlistIds, setWishlistIds] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
-  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [maxPage, setMaxPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(false);
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
   const observerTarget = useRef<HTMLDivElement | null>(null);
 
@@ -107,8 +108,10 @@ const ProductsPage = () => {
   const getAllProducts = async(isLoadMore: boolean = false) => {
     if (!isLoadMore) {
         setIsLoading(true);
+        setIsLoadingMore(false);
     } else {
         setIsLoadingMore(true);
+        setIsLoading(false);
     }
 
     try {
@@ -121,6 +124,7 @@ const ProductsPage = () => {
         }
 
         setTotalProducts(getAllProductsResponse.data.totalProducts);
+        setMaxPage(Math.ceil(getAllProductsResponse.data.totalProducts / 9));
         const newProducts = getAllProductsResponse.data.allProducts;
         setHasMore(newProducts.length === 9); // If we got less than 9 products, we've reached the end
 
@@ -142,9 +146,11 @@ const ProductsPage = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
         entries => {
-            if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
+            if (entries[0].isIntersecting && hasMore && !isLoadingMore && allProducts && allProducts?.length >= 9) {
               console.log('Bottom reached, loading more...');
-              setPage(prev => prev + 1);
+              if (page+1 <= maxPage) {
+                setPage(prev => prev + 1);
+              }
             }
         },
         { threshold: 1.0 }
@@ -155,21 +161,20 @@ const ProductsPage = () => {
     }
 
     return () => observer.disconnect();
-  }, [hasMore, isLoadingMore]);
+  });
 
   useEffect(() => {
-    getAllCategories();
+    setAllProducts([]);
     setPage(1);
-    setHasMore(true);
     getAllProducts();
+    setHasMore(true);
+    getAllCategories();
     getAllProductIdsOnCart();
     getWishlistIds();
   }, [filterCategory]);
 
   useEffect(() => {
-    if (page > 1) {
-        getAllProducts(true);
-    }
+    getAllProducts(page > 1);
   }, [page]);
 
   return (
@@ -293,7 +298,7 @@ const ProductsPage = () => {
           {/* Products Grid */}
           <div className="md:col-span-3">
             <div className="flex justify-between items-start md:items-center mb-8 md:flex-row flex-col-reverse">
-              <p className="text-gray-600">Showing 1–{allProducts?.length} of {totalProducts} results</p>
+              <p className="text-gray-600">Showing {allProducts?.length} of {totalProducts} results</p>
               <div className="flex items-center justify-between w-full md:w-fit space-x-4 mb-4">
                 <select className="border rounded-md px-4 py-2" value={sortingOrder} onChange={(e) => setSortingOrder(e.target.value)}>
                   <option>Default sorting</option>
@@ -422,7 +427,7 @@ const ProductsPage = () => {
             }
 
             <div ref={observerTarget} className="w-full h-10 flex items-center justify-center my-2">
-                {isLoadingMore && (
+                {isLoadingMore && !isLoading && (
                     <div className="text-gray-500">Loading more products...</div>
                 )}
             </div>
